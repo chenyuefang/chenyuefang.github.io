@@ -2,9 +2,99 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>weather</title>
+    <style>
+        main {
+            width: 520px;
+            margin: auto;
+        }
+
+        body {
+            color:slateblue;
+        }
+
+        image {
+            position: absolute;
+            width: 600px;
+        }
+        div{
+            display: none;
+            background:url("") repeat-x;
+        }
+    </style>
 </head>
 <body>
+<main>
+    <input placeholder="City">
+    <button>Searching</button>
+    <div>
 
+        <table>
+            <tr>
+                <td>实时天气</td>
+                <td id="city"></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td id="cond"></td>
+            </tr>
+        </table>
+    </div>
+</main>
+<script src="jquery-3.3.1.min.js"></script>
+<script>
+    var api = 'https://free-api.heweather.net/s6/weather';
+    var key = '2d51231163b647ef9038d072fafb8ade';
+    //  就绪函数
+    $(function () {
+        $('button').on('click', function () {
+            var location = $('input').val();
+            var url = api + '?key=' + key + '&location=' + location;
+            console.log(url);
+            $.ajax({
+                'url': url,
+                'dataType': 'json',
+                success: function (data) {
+                    console.log(data);
+                    var cond = data.HeWeather6[0].now.cond_txt;
+                    // console.log(data.HeWeather6[0].now.cond_txt);
+                    // $.each
+                    $('div').show();
+                    $('#city').text(location);
+                    $('#cond').text(cond);
+                }
+            });
+        })
+    });
+</script>
 </body>
 </html>
+
+
+<table border="2" align="center" bgcolor="#f8f8ff" size="1500px">
+    <tr>
+        <td width="500" height=50">beijing</td>
+        <td width="200" height=50">搜索</td>
+    </tr>
+    <tr>
+        <td width="200" height="100" colspan="2">
+            <table border="2" align="center" size="1500px">
+                <tr>
+                    <td width="300" height="50" colspan="2"></td>
+                    <td width="500" height="50"></td>
+
+                </tr>
+                <td width="200" height="50" colspan="3"></td>
+                <tr>
+                    <td width="200" height="50" colspan="3"></td>
+                </tr>
+                <tr>
+                    <td width="200" height="50" colspan="3"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
